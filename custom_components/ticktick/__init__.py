@@ -10,7 +10,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
 from .api import TickTickApi
-from .const import DOMAIN, PLATFORMS
+from .const import PLATFORMS
 from .coordinator import TickTickDataUpdateCoordinator
 
 _LOGGER = logging.getLogger(__name__)

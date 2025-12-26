@@ -3,11 +3,10 @@
 from __future__ import annotations
 
 from collections.abc import Generator
-from unittest.mock import AsyncMock, MagicMock, patch
+from unittest.mock import AsyncMock, patch
 
 import pytest
 
-from custom_components.ticktick.api import TickTickApi
 from custom_components.ticktick.coordinator import (
     TickTickData,
     TickTickProject,

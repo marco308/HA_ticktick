@@ -2,13 +2,13 @@
 
 from __future__ import annotations
 
+import contextlib
 import logging
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 from typing import Any
 
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import CONF_ACCESS_TOKEN, CONF_TOKEN
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
@@ -79,12 +79,10 @@ class TickTickTask:
         """Create a task from API data."""
         due_date = None
         if data.get("dueDate"):
-            try:
+            with contextlib.suppress(ValueError, TypeError):
                 due_date = datetime.fromisoformat(
                     data["dueDate"].replace("Z", "+00:00")
                 )
-            except (ValueError, TypeError):
-                pass
 
         return cls(
             id=data["id"],
@@ -233,23 +231,25 @@ class TickTickDataUpdateCoordinator(DataUpdateCoordinator[TickTickData]):
         threshold = now + timedelta(minutes=due_soon_minutes)
 
         for task in tasks.values():
-            if task.due_date and now < task.due_date <= threshold:
-                # Only notify once per task
-                if task.id not in self._notified_due_soon:
-                    minutes_until_due = int(
-                        (task.due_date - now).total_seconds() / 60
-                    )
-                    self.hass.bus.async_fire(
-                        EVENT_TASK_DUE_SOON,
-                        {
-                            "task_id": task.id,
-                            "project_id": task.project_id,
-                            "title": task.title,
-                            "due_date": task.due_date.isoformat(),
-                            "minutes_until_due": minutes_until_due,
-                        },
-                    )
-                    self._notified_due_soon.add(task.id)
+            if (
+                task.due_date
+                and now < task.due_date <= threshold
+                and task.id not in self._notified_due_soon
+            ):
+                minutes_until_due = int(
+                    (task.due_date - now).total_seconds() / 60
+                )
+                self.hass.bus.async_fire(
+                    EVENT_TASK_DUE_SOON,
+                    {
+                        "task_id": task.id,
+                        "project_id": task.project_id,
+                        "title": task.title,
+                        "due_date": task.due_date.isoformat(),
+                        "minutes_until_due": minutes_until_due,
+                    },
+                )
+                self._notified_due_soon.add(task.id)
 
         # Clean up old notifications for tasks that are no longer due soon
         self._notified_due_soon &= set(tasks.keys())

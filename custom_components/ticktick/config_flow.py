@@ -5,9 +5,7 @@ from __future__ import annotations
 import logging
 from typing import Any
 
-import aiohttp
 import voluptuous as vol
-
 from homeassistant.config_entries import ConfigFlow, ConfigFlowResult, OptionsFlow
 from homeassistant.const import CONF_ACCESS_TOKEN, CONF_TOKEN
 from homeassistant.core import callback
@@ -65,7 +63,7 @@ class TickTickOAuth2FlowHandler(
 
         try:
             api = TickTickApi(session, access_token)
-            user_info = await api.get_user_info()
+            await api.get_user_info()  # Validate token works
         except TickTickAuthError:
             return self.async_abort(reason="invalid_auth")
         except TickTickApiError as err:
@@ -94,7 +92,7 @@ class TickTickConfigFlow(ConfigFlow, domain=DOMAIN):
         return TickTickOptionsFlow(config_entry)
 
     async def async_step_user(
-        self, user_input: dict[str, Any] | None = None
+        self, _user_input: dict[str, Any] | None = None
     ) -> ConfigFlowResult:
         """Handle the initial step."""
         # Check if already configured

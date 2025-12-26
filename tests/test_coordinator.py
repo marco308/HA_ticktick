@@ -3,13 +3,9 @@
 from __future__ import annotations
 
 from datetime import datetime, timedelta
-from unittest.mock import AsyncMock, MagicMock, patch
-
-import pytest
 
 from custom_components.ticktick.coordinator import (
     TickTickData,
-    TickTickDataUpdateCoordinator,
     TickTickProject,
     TickTickTask,
 )
