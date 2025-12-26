@@ -46,18 +46,14 @@ class TickTickProject:
     def overdue_count(self) -> int:
         """Return count of overdue tasks."""
         now = dt_util.now()
-        return sum(
-            1 for task in self.tasks if task.due_date and task.due_date < now
-        )
+        return sum(1 for task in self.tasks if task.due_date and task.due_date < now)
 
     @property
     def due_today_count(self) -> int:
         """Return count of tasks due today."""
         today = dt_util.now().date()
         return sum(
-            1
-            for task in self.tasks
-            if task.due_date and task.due_date.date() == today
+            1 for task in self.tasks if task.due_date and task.due_date.date() == today
         )
 
 
@@ -206,7 +202,9 @@ class TickTickDataUpdateCoordinator(DataUpdateCoordinator[TickTickData]):
                         "task_id": task.id,
                         "project_id": task.project_id,
                         "title": task.title,
-                        "due_date": task.due_date.isoformat() if task.due_date else None,
+                        "due_date": task.due_date.isoformat()
+                        if task.due_date
+                        else None,
                         "priority": task.priority,
                     },
                 )
@@ -237,9 +235,7 @@ class TickTickDataUpdateCoordinator(DataUpdateCoordinator[TickTickData]):
                 and now < task.due_date <= threshold
                 and task.id not in self._notified_due_soon
             ):
-                minutes_until_due = int(
-                    (task.due_date - now).total_seconds() / 60
-                )
+                minutes_until_due = int((task.due_date - now).total_seconds() / 60)
                 self.hass.bus.async_fire(
                     EVENT_TASK_DUE_SOON,
                     {

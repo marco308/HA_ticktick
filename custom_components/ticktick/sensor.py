@@ -57,9 +57,7 @@ async def async_setup_entry(
         if new_entities:
             async_add_entities(new_entities)
 
-    entry.async_on_unload(
-        coordinator.async_add_listener(async_check_new_projects)
-    )
+    entry.async_on_unload(coordinator.async_add_listener(async_check_new_projects))
 
 
 class TickTickProjectSensor(

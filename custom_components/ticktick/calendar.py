@@ -46,9 +46,7 @@ class TickTickCalendar(
     def event(self) -> CalendarEvent | None:
         """Return the next upcoming event."""
         now = dt_util.now()
-        upcoming_events = self._get_events_in_range(
-            now, now + timedelta(days=7)
-        )
+        upcoming_events = self._get_events_in_range(now, now + timedelta(days=7))
 
         if not upcoming_events:
             return None

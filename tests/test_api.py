@@ -42,9 +42,7 @@ class TestTickTickApi:
         """Test getting projects."""
         mock_response = AsyncMock()
         mock_response.status = 200
-        mock_response.json = AsyncMock(
-            return_value=[{"id": "proj1", "name": "Inbox"}]
-        )
+        mock_response.json = AsyncMock(return_value=[{"id": "proj1", "name": "Inbox"}])
 
         mock_session.request = MagicMock(
             return_value=AsyncMock(__aenter__=AsyncMock(return_value=mock_response))
@@ -55,9 +53,7 @@ class TestTickTickApi:
         assert projects[0]["id"] == "proj1"
 
     @pytest.mark.asyncio
-    async def test_auth_error(
-        self, api: TickTickApi, mock_session: MagicMock
-    ) -> None:
+    async def test_auth_error(self, api: TickTickApi, mock_session: MagicMock) -> None:
         """Test that 401 raises TickTickAuthError."""
         mock_response = AsyncMock()
         mock_response.status = 401
@@ -85,9 +81,7 @@ class TestTickTickApi:
             await api.get_projects()
 
     @pytest.mark.asyncio
-    async def test_api_error(
-        self, api: TickTickApi, mock_session: MagicMock
-    ) -> None:
+    async def test_api_error(self, api: TickTickApi, mock_session: MagicMock) -> None:
         """Test that other 4xx/5xx raises TickTickApiError."""
         mock_response = AsyncMock()
         mock_response.status = 500
@@ -101,9 +95,7 @@ class TestTickTickApi:
             await api.get_projects()
 
     @pytest.mark.asyncio
-    async def test_create_task(
-        self, api: TickTickApi, mock_session: MagicMock
-    ) -> None:
+    async def test_create_task(self, api: TickTickApi, mock_session: MagicMock) -> None:
         """Test creating a task."""
         mock_response = AsyncMock()
         mock_response.status = 200
@@ -145,9 +137,7 @@ class TestTickTickApi:
         mock_session.request.assert_called_once()
 
     @pytest.mark.asyncio
-    async def test_delete_task(
-        self, api: TickTickApi, mock_session: MagicMock
-    ) -> None:
+    async def test_delete_task(self, api: TickTickApi, mock_session: MagicMock) -> None:
         """Test deleting a task."""
         mock_response = AsyncMock()
         mock_response.status = 204
