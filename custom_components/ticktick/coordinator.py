@@ -11,6 +11,7 @@ from typing import Any
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
+from homeassistant.util import dt as dt_util
 
 from .api import TickTickApi, TickTickApiError, TickTickAuthError
 from .const import (
@@ -44,7 +45,7 @@ class TickTickProject:
     @property
     def overdue_count(self) -> int:
         """Return count of overdue tasks."""
-        now = datetime.now()
+        now = dt_util.now()
         return sum(
             1 for task in self.tasks if task.due_date and task.due_date < now
         )
@@ -52,7 +53,7 @@ class TickTickProject:
     @property
     def due_today_count(self) -> int:
         """Return count of tasks due today."""
-        today = datetime.now().date()
+        today = dt_util.now().date()
         return sum(
             1
             for task in self.tasks
@@ -218,7 +219,7 @@ class TickTickDataUpdateCoordinator(DataUpdateCoordinator[TickTickData]):
                 EVENT_TASK_COMPLETED,
                 {
                     "task_id": task_id,
-                    "completed_at": datetime.now().isoformat(),
+                    "completed_at": dt_util.now().isoformat(),
                 },
             )
 
@@ -227,7 +228,7 @@ class TickTickDataUpdateCoordinator(DataUpdateCoordinator[TickTickData]):
         due_soon_minutes = self.config_entry.options.get(
             CONF_DUE_SOON_MINUTES, DEFAULT_DUE_SOON_MINUTES
         )
-        now = datetime.now()
+        now = dt_util.now()
         threshold = now + timedelta(minutes=due_soon_minutes)
 
         for task in tasks.values():
