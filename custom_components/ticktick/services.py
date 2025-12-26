@@ -21,6 +21,7 @@ SERVICE_COMPLETE_TASK = "complete_task"
 SERVICE_DELETE_TASK = "delete_task"
 SERVICE_UPDATE_TASK = "update_task"
 SERVICE_CREATE_SUBTASK = "create_subtask"
+SERVICE_COMPLETE_SUBTASK = "complete_subtask"
 
 # Service schemas
 SERVICE_CREATE_TASK_SCHEMA = vol.Schema(
@@ -65,6 +66,14 @@ SERVICE_CREATE_SUBTASK_SCHEMA = vol.Schema(
         vol.Required("project_id"): cv.string,
         vol.Required("title"): cv.string,
         vol.Optional("content"): cv.string,
+    }
+)
+
+SERVICE_COMPLETE_SUBTASK_SCHEMA = vol.Schema(
+    {
+        vol.Required("task_id"): cv.string,
+        vol.Required("parent_task_id"): cv.string,
+        vol.Required("project_id"): cv.string,
     }
 )
 
@@ -216,6 +225,22 @@ async def async_setup_services(hass: HomeAssistant) -> None:
         except Exception as err:
             _LOGGER.error("Failed to create subtask: %s", err)
 
+    async def handle_complete_subtask(call: ServiceCall) -> None:
+        """Handle the complete subtask service call."""
+        coordinator = _get_coordinator(hass)
+        if not coordinator:
+            _LOGGER.error("TickTick integration not set up")
+            return
+
+        task_id = call.data["task_id"]
+        project_id = call.data["project_id"]
+
+        try:
+            await coordinator.api.complete_subtask(project_id, task_id)
+            await coordinator.async_request_refresh()
+        except Exception as err:
+            _LOGGER.error("Failed to complete subtask: %s", err)
+
     # Register services
     hass.services.async_register(
         DOMAIN,
@@ -250,4 +275,11 @@ async def async_setup_services(hass: HomeAssistant) -> None:
         SERVICE_CREATE_SUBTASK,
         handle_create_subtask,
         schema=SERVICE_CREATE_SUBTASK_SCHEMA,
+    )
+
+    hass.services.async_register(
+        DOMAIN,
+        SERVICE_COMPLETE_SUBTASK,
+        handle_complete_subtask,
+        schema=SERVICE_COMPLETE_SUBTASK_SCHEMA,
     )

@@ -174,3 +174,29 @@ create_subtask:
       selector:
         text:
           multiline: true
+
+complete_subtask:
+  name: Complete Subtask
+  description: Mark a subtask as complete
+  fields:
+    task_id:
+      name: Task ID
+      description: The ID of the subtask to complete
+      required: true
+      example: "subtask123"
+      selector:
+        text:
+    parent_task_id:
+      name: Parent Task ID
+      description: The ID of the parent task
+      required: true
+      example: "task123"
+      selector:
+        text:
+    project_id:
+      name: Project ID
+      description: The ID of the project containing the task
+      required: true
+      example: "proj456"
+      selector:
+        text:

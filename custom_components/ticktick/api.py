@@ -164,6 +164,15 @@ class TickTickApi:
 
         return await self._request("POST", "/task", data)
 
+    async def complete_subtask(
+        self,
+        project_id: str,
+        task_id: str,
+    ) -> None:
+        """Mark a subtask as complete."""
+        # Subtasks are completed the same way as regular tasks
+        await self._request("POST", f"/project/{project_id}/task/{task_id}/complete")
+
     # User info (for testing auth)
     async def get_user_info(self) -> dict[str, Any]:
         """Get current user info to validate authentication."""
