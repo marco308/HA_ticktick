@@ -8,10 +8,6 @@ DOMAIN: Final = "ticktick"
 OAUTH2_AUTHORIZE: Final = "https://ticktick.com/oauth/authorize"
 OAUTH2_TOKEN: Final = "https://ticktick.com/oauth/token"
 
-# TODO: Replace with your TickTick OAuth2 credentials
-CLIENT_ID: Final = "YOUR_CLIENT_ID"
-CLIENT_SECRET: Final = "YOUR_CLIENT_SECRET"
-
 # API Configuration
 API_BASE_URL: Final = "https://api.ticktick.com/open/v1"
 

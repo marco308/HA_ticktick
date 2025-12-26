@@ -14,8 +14,6 @@ from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
 from .api import TickTickApi, TickTickApiError, TickTickAuthError
 from .const import (
-    CLIENT_ID,
-    CLIENT_SECRET,
     CONF_DUE_SOON_MINUTES,
     CONF_INCLUDE_COMPLETED,
     CONF_SCAN_INTERVAL,
@@ -24,8 +22,6 @@ from .const import (
     DOMAIN,
     MAX_SCAN_INTERVAL,
     MIN_SCAN_INTERVAL,
-    OAUTH2_AUTHORIZE,
-    OAUTH2_TOKEN,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -80,7 +76,7 @@ class TickTickOAuth2FlowHandler(
         )
 
 
-class TickTickConfigFlow(ConfigFlow, domain=DOMAIN):
+class TickTickConfigFlow(TickTickOAuth2FlowHandler, domain=DOMAIN):
     """Handle a config flow for TickTick."""
 
     VERSION = 1
@@ -92,41 +88,13 @@ class TickTickConfigFlow(ConfigFlow, domain=DOMAIN):
         return TickTickOptionsFlow(config_entry)
 
     async def async_step_user(
-        self, _user_input: dict[str, Any] | None = None
+        self, user_input: dict[str, Any] | None = None
     ) -> ConfigFlowResult:
         """Handle the initial step."""
-        # Check if already configured
         await self.async_set_unique_id(DOMAIN)
         self._abort_if_unique_id_configured()
 
-        return await self.async_step_pick_implementation()
-
-    async def async_step_pick_implementation(
-        self, user_input: dict[str, Any] | None = None
-    ) -> ConfigFlowResult:
-        """Handle picking OAuth implementation."""
-        implementations = await config_entry_oauth2_flow.async_get_implementations(
-            self.hass, DOMAIN
-        )
-
-        if not implementations:
-            # Register the built-in OAuth2 implementation
-            config_entry_oauth2_flow.async_register_implementation(
-                self.hass,
-                DOMAIN,
-                config_entry_oauth2_flow.LocalOAuth2Implementation(
-                    self.hass,
-                    DOMAIN,
-                    CLIENT_ID,
-                    CLIENT_SECRET,
-                    OAUTH2_AUTHORIZE,
-                    OAUTH2_TOKEN,
-                ),
-            )
-
-        return await TickTickOAuth2FlowHandler.async_step_pick_implementation(
-            self, user_input
-        )
+        return await super().async_step_user(user_input)
 
 
 class TickTickOptionsFlow(OptionsFlow):

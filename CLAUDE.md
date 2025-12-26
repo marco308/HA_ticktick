@@ -40,13 +40,14 @@ This is a Home Assistant custom component that integrates with TickTick task man
 
 ## Setup Requirements
 
-Before the integration works, OAuth2 credentials must be configured in `const.py`:
-```python
-CLIENT_ID: Final = "YOUR_CLIENT_ID"
-CLIENT_SECRET: Final = "YOUR_CLIENT_SECRET"
-```
+This integration uses Home Assistant's Application Credentials system for OAuth2 authentication:
 
-These are obtained from the TickTick Developer Portal.
+1. Obtain OAuth2 credentials from the TickTick Developer Portal
+2. In Home Assistant, go to **Settings > Devices & Services > Application Credentials**
+3. Add credentials for "TickTick" with your Client ID and Client Secret
+4. Set up the integration via **Settings > Devices & Services > Add Integration > TickTick**
+
+The `application_credentials.py` file provides the OAuth2 authorization server URLs to Home Assistant.
 
 ## Home Assistant Patterns
 
