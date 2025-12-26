@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import datetime, timedelta
+from datetime import UTC, datetime, timedelta
 
 from custom_components.ticktick.coordinator import (
     TickTickData,
@@ -113,7 +113,7 @@ class TestTickTickProject:
 
     def test_overdue_count(self) -> None:
         """Test overdue count property."""
-        now = datetime.now()
+        now = datetime.now(tz=UTC)
         tasks = [
             TickTickTask(
                 id="task1",
@@ -158,7 +158,7 @@ class TestTickTickProject:
 
     def test_due_today_count(self) -> None:
         """Test due today count property."""
-        now = datetime.now()
+        now = datetime.now(tz=UTC)
         tasks = [
             TickTickTask(
                 id="task1",
