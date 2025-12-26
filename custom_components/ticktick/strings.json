@@ -1,0 +1,32 @@
+{
+  "config": {
+    "step": {
+      "pick_implementation": {
+        "title": "Pick Authentication Method"
+      }
+    },
+    "abort": {
+      "already_configured": "TickTick is already configured.",
+      "invalid_auth": "Invalid authentication. Please try again.",
+      "cannot_connect": "Unable to connect to TickTick. Please check your network connection.",
+      "oauth_error": "OAuth authentication failed."
+    },
+    "error": {
+      "invalid_auth": "Invalid authentication",
+      "cannot_connect": "Unable to connect"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "TickTick Options",
+        "description": "Configure TickTick integration settings",
+        "data": {
+          "scan_interval": "Update interval (seconds)",
+          "due_soon_minutes": "Due soon threshold (minutes)",
+          "include_completed": "Include recently completed tasks"
+        }
+      }
+    }
+  }
+}

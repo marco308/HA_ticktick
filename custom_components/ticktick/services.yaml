@@ -1,0 +1,176 @@
+create_task:
+  name: Create Task
+  description: Create a new task in TickTick
+  fields:
+    title:
+      name: Title
+      description: The title of the task
+      required: true
+      example: "Buy groceries"
+      selector:
+        text:
+    project_id:
+      name: Project ID
+      description: The ID of the project to add the task to. If not specified, uses Inbox.
+      required: false
+      example: "abc123"
+      selector:
+        text:
+    content:
+      name: Content
+      description: Task description or notes
+      required: false
+      example: "Milk, eggs, bread"
+      selector:
+        text:
+          multiline: true
+    due_date:
+      name: Due Date
+      description: Due date and time in ISO format
+      required: false
+      example: "2025-01-15T10:00:00"
+      selector:
+        text:
+    priority:
+      name: Priority
+      description: Task priority level
+      required: false
+      default: "none"
+      selector:
+        select:
+          options:
+            - "none"
+            - "low"
+            - "medium"
+            - "high"
+    all_day:
+      name: All Day
+      description: Whether this is an all-day task
+      required: false
+      default: false
+      selector:
+        boolean:
+
+complete_task:
+  name: Complete Task
+  description: Mark a task as complete
+  fields:
+    task_id:
+      name: Task ID
+      description: The ID of the task to complete
+      required: true
+      example: "task123"
+      selector:
+        text:
+    project_id:
+      name: Project ID
+      description: The ID of the project containing the task
+      required: true
+      example: "proj456"
+      selector:
+        text:
+
+delete_task:
+  name: Delete Task
+  description: Delete a task from TickTick
+  fields:
+    task_id:
+      name: Task ID
+      description: The ID of the task to delete
+      required: true
+      example: "task123"
+      selector:
+        text:
+    project_id:
+      name: Project ID
+      description: The ID of the project containing the task
+      required: true
+      example: "proj456"
+      selector:
+        text:
+
+update_task:
+  name: Update Task
+  description: Update an existing task
+  fields:
+    task_id:
+      name: Task ID
+      description: The ID of the task to update
+      required: true
+      example: "task123"
+      selector:
+        text:
+    project_id:
+      name: Project ID
+      description: The ID of the project containing the task
+      required: true
+      example: "proj456"
+      selector:
+        text:
+    title:
+      name: Title
+      description: New title for the task
+      required: false
+      example: "Updated task title"
+      selector:
+        text:
+    content:
+      name: Content
+      description: New description for the task
+      required: false
+      example: "Updated notes"
+      selector:
+        text:
+          multiline: true
+    due_date:
+      name: Due Date
+      description: New due date in ISO format
+      required: false
+      example: "2025-01-20T14:00:00"
+      selector:
+        text:
+    priority:
+      name: Priority
+      description: New priority level
+      required: false
+      selector:
+        select:
+          options:
+            - "none"
+            - "low"
+            - "medium"
+            - "high"
+
+create_subtask:
+  name: Create Subtask
+  description: Create a subtask under a parent task
+  fields:
+    parent_task_id:
+      name: Parent Task ID
+      description: The ID of the parent task
+      required: true
+      example: "task123"
+      selector:
+        text:
+    project_id:
+      name: Project ID
+      description: The ID of the project containing the task
+      required: true
+      example: "proj456"
+      selector:
+        text:
+    title:
+      name: Title
+      description: The title of the subtask
+      required: true
+      example: "Subtask item"
+      selector:
+        text:
+    content:
+      name: Content
+      description: Subtask description
+      required: false
+      example: "Subtask notes"
+      selector:
+        text:
+          multiline: true
