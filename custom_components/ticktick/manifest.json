@@ -1,13 +1,12 @@
 {
   "domain": "ticktick",
   "name": "TickTick",
-  "codeowners": [],
+  "codeowners": ["@marco308"],
   "config_flow": true,
   "dependencies": ["application_credentials"],
   "documentation": "https://github.com/marco308/HA_ticktick",
   "iot_class": "cloud_polling",
   "issue_tracker": "https://github.com/marco308/HA_ticktick/issues",
-  "license": "LICENSE.md",
   "requirements": ["aiohttp>=3.8.0"],
   "version": "0.1.0"
 }

@@ -36,3 +36,4 @@ htmlcov/
 config/
 *.db
 *.log
+HACS_PUBLISHING_PLAN.md
