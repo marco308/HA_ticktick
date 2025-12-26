@@ -35,20 +35,17 @@ You need TickTick API credentials (OAuth2 client ID and secret):
 
 1. Go to the [TickTick Developer Portal](https://developer.ticktick.com/)
 2. Create a new application
-3. Note your Client ID and Client Secret
-4. Add the credentials to `custom_components/ticktick/const.py`:
-
-```python
-CLIENT_ID: Final = "your_client_id"
-CLIENT_SECRET: Final = "your_client_secret"
-```
+3. Set the redirect URI to: `https://my.home-assistant.io/redirect/oauth`
+4. Note your **Client ID** and **Client Secret**
 
 ### Setup
 
-1. Go to **Settings** → **Devices & Services**
-2. Click **Add Integration** and search for "TickTick"
-3. Follow the OAuth2 flow to authorize with your TickTick account
-4. Configure options (sync interval, due soon threshold)
+1. In Home Assistant, go to **Settings** → **Devices & Services** → **Application Credentials**
+2. Click **Add Credentials** and select "TickTick"
+3. Enter your Client ID and Client Secret from the TickTick Developer Portal
+4. Go to **Settings** → **Devices & Services** → **Add Integration**
+5. Search for "TickTick" and follow the OAuth2 flow to authorize
+6. Configure options (sync interval, due soon threshold)
 
 ## Entities
 
