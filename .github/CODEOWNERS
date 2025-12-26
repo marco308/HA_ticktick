@@ -1,0 +1,5 @@
+# CODEOWNERS - Defines code owners for this repository
+# These users will be automatically requested for review on PRs
+
+# Default owner for all files
+* @marco308
