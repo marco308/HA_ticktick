@@ -1,6 +1,13 @@
 # TickTick Integration for Home Assistant
 
-[![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://github.com/hacs/integration)
+> [!IMPORTANT]
+> **This project is archived and no longer maintained.**
+>
+> I have moved off TickTick to [Vikunja](https://vikunja.io), a self-hosted, open-source task manager, and I now build and use [mDone](https://github.com/marco308/mdone), a native iOS and macOS Vikunja client ([App Store](https://apps.apple.com/us/app/mdone/id6760613430)).
+>
+> The code below still describes the last working version, so feel free to fork it and carry it on. There will be no further updates, bug fixes, or support here.
+
+[![Status: Archived](https://img.shields.io/badge/Status-Archived-lightgrey.svg)]() [![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://github.com/hacs/integration)
 
 A Home Assistant custom component that integrates with [TickTick](https://ticktick.com), allowing you to view and manage your tasks directly from Home Assistant.
 
